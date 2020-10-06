@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - For",
+            "request": "launch",
+            "mainClass": "java.controlstatement.forloop.For",
+            "projectName": "tutorials_72c9124d"
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}"
