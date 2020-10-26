@@ -1,0 +1,5 @@
+2020.10.26 19:22:17 INFO  started: Metals version 0.9.4 in workspace '/home/pnkj/Documents/tutorials' for client vscode.
+2020.10.26 19:22:20 INFO  time: initialize in 2.99s
+2020.10.26 19:22:22 WARN  no build tool detected in workspace '/home/pnkj/Documents/tutorials'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+Oct 26, 2020 7:23:08 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTraceNotification
