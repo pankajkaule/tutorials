@@ -53,7 +53,7 @@ it manages the network rules and port forwarding
 
 ### kubernatives proxy services
 
-this service run on the each node 
+this service run on the each node
 this service is helps to making service availeble to the external host.
 this helps to forwarding the request to the correct conteiner.
 and the is the capable for the primitive load balancing 
@@ -63,3 +63,4 @@ it manages the pods the on the node volumes secrets creating new container healt
 
 command line tool us used to the create update delete and get the api object.
 kubernatives api acts as the commutator among the diffrent component of the kubernatives.
+
