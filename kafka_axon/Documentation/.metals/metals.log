@@ -1,0 +1,5 @@
+2020.11.04 14:44:16 INFO  started: Metals version 0.9.4 in workspace '/home/pnkj/Documents/tutorials/kafka_axon/Documentation' for client vscode.
+2020.11.04 14:44:19 INFO  time: initialize in 2.56s
+2020.11.04 14:44:20 WARN  no build tool detected in workspace '/home/pnkj/Documents/tutorials/kafka_axon/Documentation'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+Nov 04, 2020 3:43:21 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTraceNotification
