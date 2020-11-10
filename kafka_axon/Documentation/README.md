@@ -344,3 +344,199 @@ Another important thing to point out here is the no-args default constructor. Yo
 Basically, using this constructor, Axon creates an empty instance of the aggregate.
  Then, it applies the events. If this constructor is not present, it will result in an exception.
  so the constructor is the very important.
+
+we came far in implementing event sourcing with axon and Spring-boot. However, we still didn't' have proper way of testing our application.
+
+to do so, we would expose certain interfaces will allow us to create an account and also perform other operations.
+basically you think rest of interfaces as apis.
+
+## the service layer
+
+as the first step we will create a service layer. we will have two service interfaces.
+
+first is AccountCommandService to handle the commands. second is AccountQueryService at this point the query service will just help in fetching a list of events.
+
+Basically we to follow SOLID Principle therefore we have to code the interfaces. Below are the interfaces declarations for our services.
+
+```java
+public interface AccountCommandService {
+
+    public CompletableFuture<String> createAccount(AccountCreateDTO accountCreateDTO);
+    public CompletableFuture<String> creditMoneyToAccount(String accountNumber, MoneyCreditDTO moneyCreditDTO);
+    public CompletableFuture<String> debitMoneyFromAccount(String accountNumber, MoneyDebitDTO moneyDebitDTO);
+}
+```
+
+INTERFACE
+
+```java
+public interface AccountQueryService {
+    public List<Object> listEventsForAccount(String accountNumber);
+}
+```
+
+Now, we implement these interfaces. First is the AccountCommandServiceImpl.
+
+```java
+@Service
+public class AccountCommandServiceImpl implements AccountCommandService {
+
+    private final CommandGateway commandGateway;
+
+    public AccountCommandServiceImpl(CommandGateway commandGateway) {
+        this.commandGateway = commandGateway;
+    }
+
+    @Override
+    public CompletableFuture<String> createAccount(AccountCreateDTO accountCreateDTO) {
+        return commandGateway.send(new CreateAccountCommand(UUID.randomUUID().toString(), accountCreateDTO.getStartingBalance(), accountCreateDTO.getCurrency()));
+    }
+
+    @Override
+    public CompletableFuture<String> creditMoneyToAccount(String accountNumber, MoneyCreditDTO moneyCreditDTO) {
+        return commandGateway.send(new CreditMoneyCommand(accountNumber, moneyCreditDTO.getCreditAmount(), moneyCreditDTO.getCurrency()));
+    }
+
+    @Override
+    public CompletableFuture<String> debitMoneyFromAccount(String accountNumber, MoneyDebitDTO moneyDebitDTO) {
+        return commandGateway.send(new DebitMoneyCommand(accountNumber, moneyDebitDTO.getDebitAmount(), moneyDebitDTO.getCurrency()));
+    }
+}
+```
+
+the main thing to note here is the command gateway
+
+basically,
+this is a convience interface provided by Axon.
+
+you can use this interface to dispatch  commands.
+
+when you are wire up the commandgateway as below, axon will actually provide the defaultcommandgateway implementation.
+
+then using send method on commandgateway we can send a command and wait for the response.
+
+in the example below, we basically dispatch three commands in the three diffrent methods.
+
+then we implement the AccountQueryServiceImpl.
+
+this class is not mandatory for event sourcing using axon. However we are implementing this for our testing purposes.
+
+```java
+@Service
+public class AccountQueryServiceImpl implements AccountQueryService {
+
+    private final EventStore eventStore;
+
+    public AccountQueryServiceImpl(EventStore eventStore) {
+        this.eventStore = eventStore;
+    }
+
+    @Override
+    public List<Object> listEventsForAccount(String accountNumber) {
+        return eventStore.readEvents(accountNumber).asStream().map( s -> s.getPayload()).collect(Collectors.toList());
+    }
+}
+```
+
+Notice that we are wire up something called as eventStore.
+provides the  methods to  read events for particular aggregateid available
+
+in other words
+we call the readEvents method with aggregateid or account# as input. then we collect the output stream and transform it to list nothing to complex.
+
+## Data Transfer objects
+
+in the next step we will create data transfer objects. Even though our resource might be the entire account but different commands will require diffrent payload. therefore DTO objects are required.
+
+for the purposes we will create DTO model classes.
+
+AccountCreteDTO is used to creating  new account.
+
+```java
+
+public class AccountCreateDTO {
+
+    private double startingBalance;
+
+    private String currency;
+
+    public double getStartingBalance() {
+        return startingBalance;
+    }
+
+    public void setStartingBalance(double startingBalance) {
+        this.startingBalance = startingBalance;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+}
+
+```
+
+MoneyCreditDTO for crediting money to account.
+
+```java
+public class MoneyCreditDTO {
+
+    private double creditAmount;
+
+    private String currency;
+
+    public double getCreditAmount() {
+        return creditAmount;
+    }
+
+    public void setCreditAmount(double creditAmount) {
+        this.creditAmount = creditAmount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+}
+```
+
+MoneyDebitDTO for debiting money
+from an account.
+
+```java
+public class MoneyDebitDTO {
+
+    private double debitAmount;
+
+    private String currency;
+
+    public double getDebitAmount() {
+        return debitAmount;
+    }
+
+    public void setDebitAmount(double debitAmount) {
+        this.debitAmount = debitAmount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+}
+```
+
+as you can see these are standard pojos. 
+
+so as to enable jackson to able serialize and deserialize the objects we have declared standard getter and setter methods.
+
+of course in a real business case you might also have some valodation here.
+
