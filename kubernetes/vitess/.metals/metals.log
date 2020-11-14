@@ -1,0 +1,9 @@
+2020.11.14 09:13:57 INFO  started: Metals version 0.9.4 in workspace '/home/pnkj/Documents/tutorials/kubernetes/vitess' for client vscode.
+2020.11.14 09:14:00 INFO  time: initialize in 3.4s
+2020.11.14 09:14:01 WARN  no build tool detected in workspace '/home/pnkj/Documents/tutorials/kubernetes/vitess'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+Nov 14, 2020 9:15:44 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTraceNotification
+Nov 14, 2020 9:32:15 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTraceNotification
+Nov 14, 2020 9:32:15 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTraceNotification
