@@ -18,11 +18,11 @@ in walmart this processing is called as the lambda processing.
 
 ### important links
 
-[Near Real Time Indexing - Umesh Prasad & Thejus V M, Flipkart]([https://link](https://www.youtube.com/watch?v=05rX0mJ2N4U))
+[Near Real Time Indexing - Umesh Prasad & Thejus V M, Flipkart](https://www.youtube.com/watch?v=05rX0mJ2N4U)
 
-[Improving product discovery via relevance and ranking optimization - Akash Khandelwal]([https://link](https://www.youtube.com/watch?v=kdMyLDb6pP4))
+[Improving product discovery via relevance and ranking optimization - Akash Khandelwal](https://www.youtube.com/watch?v=kdMyLDb6pP4)
 
-[flipkart product catalog]((https://www.youtube.com/watch?v=2dfpUO6KazY))
+[flipkart product catalog](https://www.youtube.com/watch?v=2dfpUO6KazY)
 
 ![flipkart solr  real time search](images/flipkrtpreproces.png)
 
